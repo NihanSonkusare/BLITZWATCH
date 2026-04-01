@@ -1,0 +1,186 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   BLITZWATCH — Global Design System
+   Source: design_dock.md §2.1–2.5
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Custom Properties: Theater (Employee Dark Mode) ────────────────────── */
+:root {
+  /* Backgrounds */
+  --theater-bg-base:        #0A0A0F;
+  --theater-bg-surface:     #111118;
+  --theater-bg-elevated:    #1A1A24;
+
+  /* Brand / Accent */
+  --theater-accent-primary: #E8FF47;
+  --theater-accent-glow:    rgba(232, 255, 71, 0.15);
+  --theater-accent-danger:  #FF4747;
+  --theater-accent-success: #47FF9E;
+  --theater-accent-timer:   #FFB347;
+
+  /* Text */
+  --theater-text-primary:   #F0F0F8;
+  --theater-text-secondary: #8888A0;
+  --theater-text-muted:     #44445A;
+
+  /* Borders */
+  --theater-border:         rgba(255, 255, 255, 0.06);
+  --theater-border-glow:    rgba(232, 255, 71, 0.3);
+
+  /* Studio (HR Light Mode) */
+  --studio-bg-base:         #F8F8FB;
+  --studio-bg-surface:      #FFFFFF;
+  --studio-bg-elevated:     #FFFFFF;
+  --studio-accent-primary:  #5B4EFF;
+  --studio-accent-secondary:#E8FF47;
+  --studio-accent-success:  #22C55E;
+  --studio-accent-danger:   #EF4444;
+  --studio-accent-warning:  #F59E0B;
+  --studio-text-primary:    #111118;
+  --studio-text-secondary:  #555566;
+  --studio-text-muted:      #9999AA;
+  --studio-border:          #E5E5EF;
+  --studio-border-focus:    #5B4EFF;
+
+  /* Spacing scale (4px base) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+  --space-32: 128px;
+
+  /* Border radii */
+  --radius-card:  12px;
+  --radius-btn:   8px;
+  --radius-pill:  999px;
+  --radius-modal: 16px;
+  --radius-input: 8px;
+}
+
+/* ── Base Reset ─────────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* Custom cursor hidden globally (Theater) — re-enabled in Studio layout */
+  /* cursor: none; — applied per-layout via class */
+}
+
+body {
+  font-family: var(--font-inter, 'Inter', sans-serif);
+  font-size: 15px;
+  line-height: 1.6;
+  background-color: var(--theater-bg-base);
+  color: var(--theater-text-primary);
+}
+
+/* ── Typography Utilities ───────────────────────────────────────────────── */
+.font-display {
+  font-family: var(--font-bebas, 'Bebas Neue', sans-serif);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+
+.font-mono {
+  font-family: var(--font-jetbrains, 'JetBrains Mono', monospace);
+}
+
+.text-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* ── Skeleton Shimmer ───────────────────────────────────────────────────── */
+/* From design_dock.md §8 */
+@keyframes shimmer {
+  from { background-position: -200% 0; }
+  to   { background-position:  200% 0; }
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--theater-bg-elevated) 25%,
+    #2A2A38 50%,
+    var(--theater-bg-elevated) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: var(--radius-card);
+}
+
+/* Studio variant */
+.skeleton-studio {
+  background: linear-gradient(90deg, #E5E5EF 25%, #F0F0F8 50%, #E5E5EF 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: var(--radius-card);
+}
+
+/* ── Custom Scrollbar (hidden for carousels) ────────────────────────────── */
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* ── Focus Ring ─────────────────────────────────────────────────────────── */
+/* Applied via :focus-visible so keyboard-only (a11y §11) */
+:focus-visible {
+  outline: 2px solid var(--theater-accent-primary);
+  outline-offset: 2px;
+}
+
+.studio-focus:focus-visible {
+  outline-color: var(--studio-accent-primary);
+}
+
+/* ── Reduced Motion ─────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ── Glow Utilities ─────────────────────────────────────────────────────── */
+.glow-accent {
+  box-shadow: 0 0 20px var(--theater-accent-glow),
+              0 0 40px var(--theater-accent-glow);
+}
+
+.glow-border-accent {
+  border: 1px solid var(--theater-border-glow);
+  box-shadow: 0 0 12px var(--theater-accent-glow);
+}
+
+/* ── Theater layout body class ──────────────────────────────────────────── */
+.theater-layout {
+  background-color: var(--theater-bg-base);
+  color: var(--theater-text-primary);
+  cursor: none; /* Custom cursor enabled */
+}
+
+/* ── Studio layout body class ───────────────────────────────────────────── */
+.studio-layout {
+  background-color: var(--studio-bg-base);
+  color: var(--studio-text-primary);
+  cursor: auto;
+}
